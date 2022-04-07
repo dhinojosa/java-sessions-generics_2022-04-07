@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,10 +28,14 @@ public class CovariantTest {
         //northAmericansOrLower.add(new Minneapolitan());
         //northAmericansOrLower.add(new NewMexican());
         //northAmericansOrLower.add(new Bostonian());
+        //northAmericansOrLower.add(new StLouisan());
         //northAmericansOrLower.add(new NorthAmerican());
 
         //only a null
         northAmericansOrLower.add(null);
+        northAmericansOrLower.remove(person); //Whoa
+        Iterator<? extends NorthAmerican> iterator =
+            northAmericansOrLower.iterator();
     }
 
     /*
@@ -65,6 +70,7 @@ public class CovariantTest {
         missourians.add(new StLouisan());
         missourians.add(new StLouisan());
         missourians.add(new StLouisan());
+        missourians.add(new KansasCitizen());
         missourians.add(new Missourian());
         processCovariantList(missourians);
 
@@ -90,23 +96,23 @@ public class CovariantTest {
     public void testCovariantAssignment() {
 
 
-        List<Bostonian> bostonians = new ArrayList<>();
-        bostonians.add(new Bostonian());
-        bostonians.add(new Bostonian());
-        bostonians.add(new Bostonian());
-        bostonians.add(new Bostonian());
+        List<Bostonian> listOfUnknownAmericans = new ArrayList<>();
+        listOfUnknownAmericans.add(new Bostonian());
+        listOfUnknownAmericans.add(new Bostonian());
+        listOfUnknownAmericans.add(new Bostonian());
+        listOfUnknownAmericans.add(new Bostonian());
 
-        List<? extends American> americansOrLower = bostonians;
+        List<? extends American> americansOrLower = listOfUnknownAmericans;
         Object object = americansOrLower.get(0);
         Person person = americansOrLower.get(0);
         NorthAmerican northAmerican = americansOrLower.get(0);
         American american = americansOrLower.get(0);
 
-         //   Massachusettsan massachusettsan= americansOrLower.get(0);
-         //   Bostonian bostonian = americansOrLower.get(0);
+         // Massachusettsan massachusettsan= americansOrLower.get(0);
+           // Bostonian bostonian = americansOrLower.get(0);
 
 //        americansOrLower.add(new Object());
-//        americansOrLower.add(new Person());
+//       americansOrLower.add(new Person());
 //        americansOrLower.add(new NorthAmerican());
 //        americansOrLower.add(new American());
 //        americansOrLower.add(new Massachusettsan());
@@ -191,12 +197,12 @@ public class CovariantTest {
 
     //14. Process Covariant Assignment
     public void processCovariantObjectList(
-            List<? extends Object> people) {
-        Object object = people.get(0);
-        //Person person = people.get(0);
-        //Bostonian bostonian = people.get(0);
+            List<? extends Object> objects) {
+        Object object = objects.get(0);
+        //Person person = objects.get(0);
+        //Bostonian bostonian = objects.get(0);
 
-        people.add(null);
+        objects.add(null);
     }
 
     @Test

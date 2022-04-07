@@ -4,6 +4,7 @@ import com.xyzcorp.people.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
@@ -20,13 +21,16 @@ public class ContravariantTest {
         americans.add(new Denverite());
         americans.add(new Coloradan());
         americans.add(new Missourian());
-        americans.add(new StLouisan());
+        StLouisan stLouisan = new StLouisan();
+        americans.add(stLouisan);
         //americans.add(new European()); //Nein!
         //americans.add(new Person());
         americans.add(null);
+        americans.remove(stLouisan); //Whoa
 
         Object o = americans.get(0);
         //American a = americans.get(0);
+        Iterator<? super American> iterator = americans.iterator();
     }
 
     /*
@@ -85,7 +89,8 @@ public class ContravariantTest {
     public void testContravariantAssignment() {
         ArrayList<Person> people = new ArrayList<>();
         people.add(new Canadian());
-        people.add(new American());
+        American american = new American();
+        people.add(american);
         people.add(new Coloradan());
         people.add(new Mexican());
         people.add(new European());
@@ -103,10 +108,11 @@ public class ContravariantTest {
          //      americansOrHigher.add(new Object());
          //      americansOrHigher.add(new Person());
          //      americansOrHigher.add(new NorthAmerican());
-        americansOrHigher.add(new American());
+        americansOrHigher.add(american);
         americansOrHigher.add(new Massachusettsan());
         americansOrHigher.add(new Bostonian());
-        americansOrHigher.set(1, new NewMexican());
+        Object o = americansOrHigher.set(1, new NewMexican());
         americansOrHigher.add(null);
+        americansOrHigher.remove(american);
     }
 }

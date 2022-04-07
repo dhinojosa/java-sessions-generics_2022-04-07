@@ -36,7 +36,7 @@ public class GenericsBasicsTest {
         words.add("Hello ");
         words.add("world!");
         String s = ((String) words.get(0)).substring(1, 2) +
-                ((String) words.get(1)).substring(2, 4);
+            ((String) words.get(1)).substring(2, 4);
         System.out.println(s);
     }
 
@@ -44,12 +44,12 @@ public class GenericsBasicsTest {
     @Test
     public void testEliminationOfCasting() {
         //JDK11
-        //final var words = new ArrayList<String>();
-        List<String> words = new ArrayList<>(); //JDK 5- 10
+//        final var words = new ArrayList<String>();
+        List<String> words = new ArrayList<>(); //JDK 5-18
         words.add("Hello ");
         words.add("world!");
         String s = words.get(0).substring(1, 2) +
-                words.get(1).substring(2, 4);
+            words.get(1).substring(2, 4);
         System.out.println(s);
     }
 
@@ -94,9 +94,9 @@ public class GenericsBasicsTest {
     @SuppressWarnings("InstantiatingObjectToGetClassObject")
     public void testErasure() {
         System.out.format("Runtime type of ArrayList<String>: %s\n",
-                new ArrayList<String>().getClass());
+            new ArrayList<String>().getClass());
         System.out.format("Runtime type of ArrayList<Long>  : %s\n",
-                new ArrayList<Long>().getClass());
+            new ArrayList<Long>().getClass());
     }
 
 
@@ -107,18 +107,30 @@ public class GenericsBasicsTest {
             Then we have a Stream<String
             Then can fit a function of <CharSequence> and <Number>
          */
-        Stream.of("One", "Two", "Three", "Four")
-              .map(new Function<CharSequence, Number>() {
-                  @Override
-                  public Integer apply(CharSequence s) {
-                      return s.length();
-                  }
-              })
-              .forEach(new Consumer<Object>() {
-                  @Override
-                  public void accept(Object o) {
-                      System.out.println(o);
-                  }
-              });
+        Stream<String> stringStream = Stream.of("One", "Two", "Three", "Four");
+
+        Function<? super String, ? extends Number> mapper = new Function<>() {
+            @Override
+            public Integer apply(String s) {
+                return s.length();
+            }
+        };
+
+        Stream<Number> result =
+            stringStream.map(mapper);
+                stringStream
+                    .map(new Function<CharSequence, Number>() {
+                        @Override
+                        public Integer apply(CharSequence s) {
+                            return s.length();
+                        }
+                    })
+                    .forEach(new Consumer<Object>() {
+                        @Override
+                        public void accept(Object o) {
+                            System.out.println(o);
+                        }
+                    });
+//    }
     }
 }

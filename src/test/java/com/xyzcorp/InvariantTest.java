@@ -68,10 +68,18 @@ public class InvariantTest {
         americans.add(new StLouisan());
         americans.add(new SanFranciscan());
         processInvariantList(americans);
-
-
     }
 
+    @Test
+    void testInvariantMethod2CantDoIt() {
+        List<Minneapolitan> minneapolitans = new ArrayList<>();
+        minneapolitans.add(new Minneapolitan());
+        minneapolitans.add(new Minneapolitan());
+        minneapolitans.add(new Minneapolitan());
+        minneapolitans.add(new Minneapolitan());
+        minneapolitans.add(new Minneapolitan());
+//        processInvariantList(minneapolitans);
+    }
 
     //10. Invariant Assignments
     @Test
@@ -94,3 +102,8 @@ public class InvariantTest {
     }
 
 }
+
+
+
+
+
